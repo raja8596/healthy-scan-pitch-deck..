@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Scan - Complete Healthcare Ecosystem</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f3460 100%);
+            overflow-x: hidden;
+            color: #ffffff;
+        }
+
+        .deck-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+            background: linear-gradient(135deg, #00e5ff 0%, #00aadd 100%);
+        }
+
+        .slide-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 15px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background: #00d4ff;
+        }
+
+        .slide {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 70px;
+            margin-bottom: 100px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            min-height: 650px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.6s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #00d4ff;
+            font-size: 4em;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #00d4ff;
+            font-size: 2.8em;
+            margin-bottom: 35px;
+            border-bottom: 3px solid rgba(0, 212, 255, 0.3);
+            padding-bottom: 20px;
+        }
+
+        h3 {
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            font-size: 1.6em;
+            margin: 25px 0 15px 0;
+            font-weight: 700;
+        }
+
+        p,
+        li {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            font-size: 1.15em;
+            font-weight: 400;
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            color: #00d4ff;
+            font-style: italic;
+            margin-top: 25px;
+            font-weight: 300;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .logo {
+            font-size: 6em;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+        }
+
+        .problem-box,
+        .solution-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.05) 100%);
+            padding: 35px;
+            border-radius: 20px;
+            border-left: 5px solid #00d4ff;
+            margin: 25px 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 35px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 35px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(0, 153, 204, 0.1) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .stat-label {
+            font-size: 1.05em;
+            opacity: 0.9;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 15px 0 15px 25px;
+            position: relative;
+            margin: 15px 0;
+            border-left: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: -15px;
+            font-size: 1.5em;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(0, 153, 204, 0.15) 100%);
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            margin: 40px 0;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(0, 212, 255, 0.3) 0%, rgba(0, 212, 255, 0.1) 100%);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .icon {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.05) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            .grid-2,
+            .grid-3,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="deck-container">
+        <!-- Slide 1: Cover -->
+        <div class="slide active" data-slide="1">
+            <div class="hero-section">
+                <div class="logo">🏥</div>
+                <h1>HEALTHY SCAN</h1>
+                <p class="tagline">The Complete Healthcare Ecosystem in Your Pocket</p>
+                <p style="margin-top: 50px; font-size: 1.3em; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    Scan. Consult. Treat. Learn. Emergency Support — Everything Healthcare, One Platform
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide" data-slide="2">
+            <h2>🚨 The Healthcare Crisis</h2>
+            <div class="problem-box">
+                <h3>Healthcare is Fragmented, Expensive, and Inaccessible</h3>
+                <p>People struggle to navigate multiple platforms, high costs, lack of information, and delayed care.
+                    When health emergencies strike, there's no unified system to help.</p>
+            </div>
+            <div class="grid-3">
+                <div class="stat-card">
+                    <div class="stat-number">68%</div>
+                    <div class="stat-label">Indians lack access to quality healthcare</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">150M+</div>
+                    <div class="stat-label">People with chronic conditions need regular monitoring</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹50K+</div>
+                    <div class="stat-label">Average cost for diagnosis & treatment</div>
+                </div>
+            </div>
+            <ul class="feature-list" style="margin-top: 40px;">
+                <li><strong>No Early Detection:</strong> People don't know what's wrong until it's too late</li>
+                <li><strong>Hospital Chaos:</strong> No transparency on beds, doctors, facilities, or costs</li>
+                <li><strong>Expensive Medicines:</strong> No way to compare pharmacy prices or get home delivery</li>
+                <li><strong>Blood Emergency Crisis:</strong> No real-time blood availability during emergencies</li>
+                <li><strong>Health Illiteracy:</strong> Students and people lack structured medical knowledge</li>
+                <li><strong>Emergency Response Gap:</strong> No instant help button for medical emergencies</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Solution Overview -->
+        <div class="slide" data-slide="3">
+            <h2>✨ Healthy Scan: 7-in-1 Healthcare SuperApp</h2>
+            <div class="solution-box">
+                <h3>One Platform. Complete Healthcare. For Everyone.</h3>
+                <p>Healthy Scan is the world's first comprehensive healthcare ecosystem that combines AI-powered health
+                    scanning, hospital transparency, doctor consultations, pharmacy networks, blood banks, medical
+                    education, and emergency response—all in one app.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">🤖</div>
+                    <h3>1. AI Body Scanner</h3>
+                    <p>Scan your body, symptoms, skin issues → Get instant AI analysis and health insights. Know what's
+                        wrong before visiting a doctor.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🏥</div>
+                    <h3>2. Hospital Finder</h3>
+                    <p>Search hospitals by location → See facilities, departments, bed availability, ICU status, doctor
+                        profiles, treatment costs, ratings—complete transparency.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">👨‍⚕️</div>
+                    <h3>3. Doctor Consultation</h3>
+                    <p>Browse doctors by specialty & qualifications → Book video/audio/chat consultations or in-person
+                        appointments. Choose your doctor, your way.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">💊</div>
+                    <h3>4. Smart Pharmacy Network</h3>
+                    <p>Compare medicine prices across pharmacies → Order cheapest medicines with home delivery.
+                        AI-approved prescriptions from doctors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🩸</div>
+                    <h3>5. Blood Bank Integration</h3>
+                    <p>Check real-time blood availability → Book blood units with proof → Emergency blood delivery.
+                        Lives saved through instant access.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📚</div>
+                    <h3>6. Medical Knowledge Hub</h3>
+                    <p>Complete medical education from basics to latest discoveries → Students learn anatomy, diseases,
+                        research papers, case studies. Healthcare education for all.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🚨</div>
+                    <h3>7. Emergency SOS Button</h3>
+                    <p>One-tap emergency help → Instant ambulance dispatch, nearest hospital alert, emergency contacts
+                        notified. Save lives with speed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h3>BONUS: Health Tracker + Diet Plans</h3>
+                    <p>Track vitals, symptoms, medications → AI-generated personalized diet plans based on your health
+                        goals and conditions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: How It Works -->
+        <div class="slide" data-slide="4">
+            <h2>⚙️ How Healthy Scan Works</h2>
+            <div class="grid-2" style="margin-top: 40px;">
+                <div class="card">
+                    <h3>🔍 Step 1: AI Health Scanning</h3>
+                    <ul class="feature-list">
+                        <li>User uploads photo or describes symptoms</li>
+                        <li>AI analyzes visible conditions, patterns, risk factors</li>
+                        <li>Instant preliminary diagnosis with severity level</li>
+                        <li>Recommendations: home care, doctor visit, or emergency</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🏥 Step 2: Hospital Intelligence</h3>
+                    <ul class="feature-list">
+                        <li>Search by location, specialty, or condition</li>
+                        <li>View complete hospital profile: departments, equipment, doctors</li>
+                        <li>Check real-time bed availability, ICU status, OT status</li>
+                        <li>See treatment costs, ratings, reviews, insurance acceptance</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>👨‍⚕️ Step 3: Doctor Consultation</h3>
+                    <ul class="feature-list">
+                        <li>Filter doctors by specialty, qualifications, experience, ratings</li>
+                        <li>See doctor's education, certifications, success rates</li>
+                        <li>Book instant video/audio/chat or schedule appointment</li>
+                        <li>Get e-prescription approved by verified doctors</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>💊 Step 4: Medicine Delivery</h3>
+                    <ul class="feature-list">
+                        <li>Upload prescription or use doctor's e-prescription</li>
+                        <li>Compare prices across partner pharmacies</li>
+                        <li>Order from cheapest option with delivery tracking</li>
+                        <li>Medicine authentication and quality guarantee</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🩸 Step 5: Blood Bank Access</h3>
+                    <ul class="feature-list">
+                        <li>Check blood group availability in real-time</li>
+                        <li>Book blood units with medical proof/prescription</li>
+                        <li>Emergency delivery with ambulance coordination</li>
+                        <li>Blood donation campaigns and donor matching</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📚 Step 6: Learn & Track</h3>
+                    <ul class="feature-list">
+                        <li>Access medical knowledge: anatomy, diseases, treatments</li>
+                        <li>Daily health tips, research updates, case studies</li>
+                        <li>Track symptoms, vitals, medications over time</li>
+                        <li>AI-generated diet plans based on health conditions</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section" style="margin-top: 40px;">
+                <p style="font-size: 1.4em; font-weight: 600;">Complete Healthcare Journey: <span class="highlight">Scan
+                        → Diagnose → Hospital → Doctor → Medicine → Blood → Learn → Track → Emergency</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 5: AI Technology -->
+        <div class="slide" data-slide="5">
+            <h2>🤖 AI-Powered Intelligence</h2>
+            <div class="problem-box">
+                <h3>Advanced AI That Understands Healthcare</h3>
+                <p>Our AI doesn't replace doctors—it empowers them and makes healthcare accessible. It provides
+                    preliminary analysis so people know when and where to seek help.</p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">👁️</div>
+                    <h3>Visual Recognition</h3>
+                    <p>Analyzes skin conditions, rashes, visible symptoms, body signs to identify potential health
+                        issues</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🧠</div>
+                    <h3>Symptom Analysis</h3>
+                    <p>Processes symptom descriptions and patterns to suggest possible conditions and urgency levels</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <h3>Health Pattern Detection</h3>
+                    <p>Tracks health data over time to identify trends, risk factors, and prevention opportunities</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🍎</div>
+                    <h3>Personalized Diet AI</h3>
+                    <p>Creates custom meal plans based on age, conditions, allergies, goals, and cultural preferences
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="icon">💊</div>
+                    <h3>Medicine Intelligence</h3>
+                    <p>Verifies prescriptions, checks drug interactions, suggests generic alternatives, finds best
+                        prices</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🚑</div>
+                    <h3>Emergency Triage</h3>
+                    <p>Determines severity level and routes critical cases to emergency services instantly</p>
+                </div>
+            </div>
+            <ul class="feature-list" style="margin-top: 40px;">
+                <li><strong>Privacy-First:</strong> All health data encrypted and never shared without consent</li>
+                <li><strong>Medically Validated:</strong> AI trained on verified medical datasets with doctor oversight
+                </li>
+                <li><strong>Transparent AI:</strong> Shows confidence levels and always recommends professional
+                    verification</li>
+                <li><strong>Continuous Learning:</strong> Improves accuracy with every scan while maintaining safety
+                    standards</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Platform Features Deep Dive -->
+        <div class="slide" data-slide="6">
+            <h2>🎯 Platform Features in Detail</h2>
+            <div class="problem-box">
+                <h3>Hospital Dashboard: Complete Transparency</h3>
+                <ul class="feature-list">
+                    <li>Real-time bed availability (General, ICU, Ventilator)</li>
+                    <li>Department-wise doctor listings with qualifications</li>
+                    <li>Treatment-wise cost estimation and package details</li>
+                    <li>Diagnostic facilities available (MRI, CT, X-Ray, Labs)</li>
+                    <li>Emergency services status and ambulance availability</li>
+                    <li>Patient reviews, ratings, success rates, and accreditations</li>
+                    <li>Insurance partnerships and cashless treatment options</li>
+                </ul>
+            </div>
+            <div class="problem-box" style="margin-top: 30px;">
+                <h3>Doctor Portal: Professional Dashboard</h3>
+                <ul class="feature-list">
+                    <li>Manage appointments, consultations, and patient records</li>
+                    <li>Video/audio/chat consultation tools built-in</li>
+                    <li>E-prescription generation with digital signature</li>
+                    <li>Patient history access and health tracking</li>
+                    <li>Earnings dashboard with transparent commission structure</li>
+                    <li>Verified credentials showcase (degrees, certifications, experience)</li>
+                    <li>Research publishing and case study sharing platform</li>
+                </ul>
+            </div>
+            <div class="problem-box" style="margin-top: 30px;">
+                <h3>Medical Education Hub: Knowledge for All</h3>
+                <ul class="feature-list">
+                    <li>Human anatomy: Detailed 3D models of body systems</li>
+                    <li>Disease database: Symptoms, causes, treatments, prevention</li>
+                    <li>Research papers and latest medical discoveries updated daily</li>
+                    <li>Case studies from verified doctors and hospitals</li>
+                    <li>Medical terminology dictionary and learning resources</li>
+                    <li>Student certification courses and skill assessments</li>
+                    <li>Doctor blogs, opinions, and expert insights</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Target Market -->
+        <div class="slide" data-slide="7">
+            <h2>🎯 Who Needs Healthy Scan</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">👨‍👩‍👧‍👦</div>
+                    <h3>General Public (Primary)</h3>
+                    <p>1.4B+ Indians need affordable, accessible healthcare. Urban and rural families struggling with
+                        fragmented systems, high costs, and lack of information.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🎓</div>
+                    <h3>Medical Students</h3>
+                    <p>10M+ students need structured medical education, latest research, case studies, and learning
+                        resources beyond expensive textbooks.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🏥</div>
+                    <h3>Hospitals & Clinics (B2B)</h3>
+                    <p>Need patient pre-screening, appointment management, and visibility to attract patients. Our
+                        platform increases their reach and efficiency.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">👨‍⚕️</div>
+                    <h3>Individual Doctors</h3>
+                    <p>Independent practitioners need online presence, consultation tools, patient management, and
+                        additional income streams through telemedicine.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">💊</div>
+                    <h3>Pharmacies</h3>
+                    <p>Local pharmacies gain online visibility, home delivery capability, and increased sales through
+                        our network of verified users.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🏢</div>
+                    <h3>Corporate Wellness</h3>
+                    <p>Companies want affordable employee health monitoring, consultation access, and wellness programs
+                        for workforce productivity.</p>
+                </div>
+            </div>
+            <div class="cta-section" style="margin-top: 40px;">
+                <h3 style="color: white; margin-bottom: 20px;">Total Addressable Market</h3>
+                <div class="grid-3">
+                    <div>
+                        <div class="stat-number">1.4B+</div>
+                        <div class="stat-label">Potential Users in India</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">$50B+</div>
+                        <div class="stat-label">India Health-Tech Market</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">$900B+</div>
+                        <div class="stat-label">Global Opportunity by 2030</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Business Model -->
+        <div class="slide" data-slide="8">
+            <h2>💰 Revenue Model: 7 Income Streams</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>1️⃣ Freemium Subscriptions</h3>
+                    <p><strong>Free:</strong> 3 AI scans/month, basic health education<br>
+                        <strong>Premium (₹199/month):</strong> Unlimited scans, detailed reports, health tracker, diet
+                        plans, priority support
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3>2️⃣ Doctor Consultation Commission</h3>
+                    <p>15-20% commission on every consultation booked<br>
+                        <strong>Avg consultation:</strong> ₹300-500<br>
+                        <strong>Our commission:</strong> ₹45-100 per consultation
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3>3️⃣ Pharmacy Partnerships</h3>
+                    <p>5-10% commission per medicine order<br>
+                        <strong>Avg order:</strong> ₹500-1500<br>
+                        <strong>Our commission:</strong> ₹25-150 per order
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3>4️⃣ Hospital Integration Fees</h3>
+                    <p>Hospitals pay for premium listing, featured placement, and patient pre-screening services<br>
+                        <strong>Monthly fee:</strong> ₹5,000-50,000 per hospital
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3>5️⃣ Blood Bank Services</h3>
+                    <p>Commission on blood unit bookings and delivery<br>
+                        <strong>Per unit commission:</strong> ₹200-500<br>
+                        Emergency delivery premium charges
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3>6️⃣ Premium Education Content</h3>
+                    <p>Certification courses for students<br>
+                        Advanced medical courses (₹999-4,999)<br>
+                        Doctor masterclasses and webinars</p>
+                </div>
+                <div class="feature-card">
+                    <h3>7️⃣ Corporate Wellness Packages</h3>
+                    <p>B2B packages for companies<br>
+                        <strong>₹200-500 per employee/year</strong><br>
+                        Bulk health screening and consultation access
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3>8️⃣ Insurance Partnerships (Future)</h3>
+                    <p>Health insurance companies partner for risk assessment and policy recommendations<br>
+                        Commission on insurance sales through platform</p>
+                </div>
+            </div>
+            <div
+                style="margin-top: 40px; padding: 35px; background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 204, 0.1) 100%); border-radius: 20px;">
+                <h3 style="text-align: center; margin-bottom: 25px;">3-Year Revenue Projection</h3>
+                <div class="grid-3">
+                    <div style="text-align: center;">
+                        <div class="stat-number">₹45L</div>
+                        <div class="stat-label">Year 1 (Conservative)</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat-number">₹3 Cr</div>
+                        <div class="stat-label">Year 2 (Growth)</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat-number">₹10 Cr+</div>
+                        <div class="stat-label">Year 3 (Scale)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Competitive Advantage -->
+        <div class="slide" data-slide="9">
+            <h2>🏆 Why We Win: Complete Ecosystem</h2>
+            <div class="grid-2">
+                <div class="card" style="border-left: 4px solid rgba(255, 100, 100, 0.5);">
+                    <h3>❌ Competitors: Fragmented Solutions</h3>
+                    <ul class="feature-list">
+                        <li><strong>Practo/1mg:</strong> Only doctor booking + medicine delivery. No AI scanning, no
+                            education, no blood banks</li>
+                        <li><strong>Google Health:</strong> Information only, no actionable healthcare services</li>
+                        <li><strong>Hospital Apps:</strong> Single hospital focus, no comparison or choice</li>
+                        <li><strong>Telemedicine Apps:</strong> Just consultations, no complete journey</li>
+                        <li><strong>Fitness Apps:</strong> Track metrics but miss medical-grade insights</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 4px solid #00d4ff;">
+                    <h3>✓ Healthy Scan: All-in-One Platform</h3>
+                    <ul class="feature-list">
+                        <li><strong>AI Body Scanner:</strong> Early detection before symptoms worsen</li>
+                        <li><strong>Hospital Transparency:</strong> Compare facilities, costs, availability</li>
+                        <li><strong>Doctor Choice:</strong> Select by qualifications, not proximity</li>
+                        <li><strong>Pharmacy Network:</strong> Compare prices, get cheapest medicine</li>
+                        <li><strong>Blood Bank Integration:</strong> Life-saving emergency access</li>
+                        <li><strong>Medical Education:</strong> Empower through knowledge</li>
+                        <li><strong>Emergency SOS:</strong> One-tap lifesaving help</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section" style="margin-top: 50px;">
+                <h3 style="color: white; margin-bottom: 25px;">Our Unique Moat</h3>
+                <div class="grid-3" style="margin-top: 30px;">
+                    <div class="card">
+                        <div class="icon">🔗</div>
+                        <h3>Network Effects</h3>
+                        <p>More hospitals → More doctors → More users → More pharmacies → Stronger ecosystem</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🧠</div>
+                        <h3>AI Data Advantage</h3>
+                        <p>Every scan improves AI accuracy. First-mover advantage in healthcare AI data collection</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🎓</div>
+                        <h3>Education Lock-In</h3>
+                        <p>Students using our platform become lifelong users and future healthcare professionals</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Go-to-Market Strategy -->
+        <div class="slide" data-slide="10">
+            <h2>📣 Go-to-Market Strategy</h2>
+            <div class="problem-box">
+                <h3>Phase 1: Launch & Traction (0-6 Months)</h3>
+                <ul class="feature-list">
+                    <li><strong>Target Cities:</strong> Delhi-NCR, Bangalore, Mumbai (Tier 1 launch)</li>
+                    <li><strong>Early Users:</strong> 10,000 beta users through referral programs</li>
+                    <li><strong>Hospital Onboarding:</strong> Partner with 50+ hospitals for listing</li>
+                    <li><strong>Doctor Recruitment:</strong> 500+ verified doctors across specialties</li>
+                    <li><strong>Pharmacy Network:</strong> 100+ local pharmacies for delivery</li>
+                    <li><strong>Marketing:</strong> Social media, influencer partnerships, medical communities</li>
+                    <li><strong>AI Training:</strong> Collect data, improve accuracy, build trust</li>
+                </ul>
+            </div>
+            <div class="problem-box" style="margin-top: 30px;">
+                <h3>Phase 2: Growth & Expansion (6-18 Months)</h3>
+                <ul class="feature-list">
+                    <li><strong>Geographic Expansion:</strong> 15+ cities including Tier 2 (Pune, Jaipur, Lucknow,
+                        Ahmedabad)</li>
+                    <li><strong>User Growth:</strong> 100,000+ active users with 20% monthly retention</li>
+                    <li><strong>Hospital Network:</strong> 500+ hospitals with complete transparency</li>
+                    <li><strong>Doctor Base:</strong> 5,000+ doctors providing consultations</li>
+                    <li><strong>Education Launch:</strong> Full medical knowledge hub with certification courses</li>
+                    <li><strong>Corporate B2B:</strong> 50+ companies for employee wellness programs</li>
+                    <li><strong>Blood Bank Integration:</strong> Partner with 100+ blood banks across cities</li>
+                </ul>
+            </div>
+            <div class="problem-box" style="margin-top: 30px;">
+                <h3>Phase 3: National Scale (18-36 Months)</h3>
+                <ul class="feature-list">
+                    <li><strong>Pan-India Presence:</strong> All major cities + rural telemedicine expansion</li>
+                    <li><strong>1M+ Users:</strong> Household brand for healthcare in India</li>
+                    <li><strong>International Launch:</strong> Southeast Asia, Middle East, Africa pilot</li>
+                    <li><strong>Advanced Features:</strong> Health tracker, insurance integration, chronic disease
+                        management</li>
+                    <li><strong>Government Partnerships:</strong> Ayushman Bharat, state health programs</li>
+                    <li><strong>Series A Funding:</strong> Scale aggressively for category leadership</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 11: Technology & Security -->
+        <div class="slide" data-slide="11">
+            <h2>🔒 Technology & Data Security</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">📱</div>
+                    <h3>Multi-Platform Access</h3>
+                    <ul class="feature-list">
+                        <li>Android & iOS native apps</li>
+                        <li>Progressive Web App (PWA) for low-data areas</li>
+                        <li>Works offline for basic features</li>
+                        <li>Multi-language support (Hindi, English, regional)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">🔐</div>
+                    <h3>Data Privacy & Security</h3>
+                    <ul class="feature-list">
+                        <li>End-to-end encryption for all health data</li>
+                        <li>HIPAA & GDPR compliant architecture</li>
+                        <li>User data never sold or shared</li>
+                        <li>Biometric authentication for sensitive access</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <h3>Scalable Infrastructure</h3>
+                    <ul class="feature-list">
+                        <li>Cloud-based architecture for 99.9% uptime</li>
+                        <li>AI processing optimized for speed</li>
+                        <li>CDN for fast content delivery nationwide</li>
+                        <li>Real-time data sync across devices</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <h3>Verification & Quality</h3>
+                    <ul class="feature-list">
+                        <li>Doctor credentials verified by medical councils</li>
+                        <li>Hospital certifications and accreditations checked</li>
+                        <li>Pharmacy licenses validated</li>
+                        <li>User reviews and rating system for transparency</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="problem-box" style="margin-top: 40px;">
+                <h3>Regulatory Compliance</h3>
+                <p>Healthy Scan complies with all Indian healthcare regulations including FSSAI for medicines, Medical
+                    Council of India for doctor verification, Telemedicine Practice Guidelines, and Data Protection
+                    laws. We work closely with legal advisors to ensure complete compliance as we scale.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Impact Vision -->
+        <div class="slide" data-slide="12">
+            <h2>🌍 Impact & Vision</h2>
+            <div class="cta-section">
+                <div class="icon">❤️</div>
+                <h3 style="color: white; font-size: 2em; margin-bottom: 20px;">Our Mission</h3>
+                <p style="font-size: 1.4em; line-height: 1.7;">"Make quality healthcare accessible, affordable, and
+                    transparent for every Indian—from cities to villages. Empower people with knowledge and tools to
+                    take charge of their health."</p>
+            </div>
+            <div style="margin-top: 50px;">
+                <h3>5-Year Impact Goals</h3>
+                <div class="grid-3" style="margin-top: 30px;">
+                    <div class="stat-card">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label">Lives Empowered with Health Access</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100K+</div>
+                        <div class="stat-label">Healthcare Professionals Connected</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Lives Saved Through Early Detection</div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-top: 50px;">
+                <div class="card">
+                    <div class="icon">🎯</div>
+                    <h3>Social Impact</h3>
+                    <ul class="feature-list">
+                        <li>Bridge urban-rural healthcare divide</li>
+                        <li>Reduce preventable deaths through early detection</li>
+                        <li>Empower women and elderly with health access</li>
+                        <li>Create jobs for healthcare workers</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">💡</div>
+                    <h3>Economic Impact</h3>
+                    <ul class="feature-list">
+                        <li>Reduce healthcare costs by 30-40% for families</li>
+                        <li>Increase income for local pharmacies and doctors</li>
+                        <li>Save ₹1000+ Cr in preventable treatment costs</li>
+                        <li>Create sustainable healthcare economy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Team -->
+        <div class="slide" data-slide="13">
+            <h2>👥 Team & Founder</h2>
+            <div class="card" style="margin: 30px 0; padding: 50px; text-align: center;">
+                <div class="icon">👨‍💻</div>
+                <h3 style="font-size: 2.2em; margin-bottom: 15px;">Rudra Pratap Singh</h3>
+                <p style="font-size: 1.3em; margin-bottom: 25px; color: #00d4ff;"><strong>Founder & CEO</strong></p>
+                <ul class="feature-list" style="text-align: left; max-width: 800px; margin: 0 auto;">
+                    <li><strong>Education:</strong> BS Data Science, IIT Madras</li>
+                    <li><strong>Expertise:</strong> AI/ML, Web Development, Healthcare Technology</li>
+                    <li><strong>Vision:</strong> Democratizing healthcare access through technology and making health
+                        knowledge accessible to every Indian</li>
+                    <li><strong>Passion:</strong> Building AI-powered solutions that solve real-world problems and
+                        create social impact</li>
+                </ul>
+                <p style="margin-top: 35px; font-size: 1.2em; color: #00d4ff;">📧 rudrapratap8692149@gmail.com</p>
+            </div>
+            <div style="margin-top: 50px;">
+                <h3>Building World-Class Team</h3>
+                <div class="grid-3" style="margin-top: 30px;">
+                    <div class="card">
+                        <h3>🔍 Currently Seeking</h3>
+                        <ul class="feature-list">
+                            <li>AI/ML Engineer (Healthcare focus)</li>
+                            <li>Full-Stack App Developer</li>
+                            <li>Medical Advisor (Licensed MD)</li>
+                            <li>Operations & Growth Lead</li>
+                            <li>Healthcare Partnerships Manager</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>💡 Advisor Network</h3>
+                        <ul class="feature-list">
+                            <li>Healthcare industry veterans</li>
+                            <li>AI/ML researchers</li>
+                            <li>Medical regulatory experts</li>
+                            <li>Telemedicine specialists</li>
+                            <li>Healthcare investors</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>🤝 Looking for Partners</h3>
+                        <ul class="feature-list">
+                            <li>Hospital chains</li>
+                            <li>Doctor networks</li>
+                            <li>Pharmacy chains</li>
+                            <li>Blood bank organizations</li>
+                            <li>Medical colleges</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: The Ask -->
+        <div class="slide" data-slide="14">
+            <h2>💰 Investment Ask</h2>
+            <div class="cta-section">
+                <div style="font-size: 3.5em; font-weight: 800; margin-bottom: 25px; color: #00d4ff;">$100,000</div>
+                <p style="font-size: 1.5em; font-weight: 600;">Pre-Seed Funding to Launch Complete Healthcare Ecosystem
+                </p>
+            </div>
+            <div style="margin-top: 50px;">
+                <h3>Fund Allocation Breakdown</h3>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="feature-card">
+                        <h3>🤖 AI Development - 30% ($30K)</h3>
+                        <ul class="feature-list">
+                            <li>AI body scanner development & training</li>
+                            <li>Image recognition models for health conditions</li>
+                            <li>Symptom analysis & pattern detection systems</li>
+                            <li>Diet plan AI and health tracker algorithms</li>
+                            <li>Cloud infrastructure for AI processing</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📱 Platform Development - 25% ($25K)</h3>
+                        <ul class="feature-list">
+                            <li>Android & iOS app development</li>
+                            <li>Web platform and admin dashboards</li>
+                            <li>Hospital/doctor/pharmacy portals</li>
+                            <li>Payment gateway integration</li>
+                            <li>Real-time data sync & notifications</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3>👥 Team Hiring - 20% ($20K)</h3>
+                        <ul class="feature-list">
+                            <li>AI/ML engineer (contract/full-time)</li>
+                            <li>App developer (cross-platform)</li>
+                            <li>Medical advisor (part-time initially)</li>
+                            <li>Operations manager</li>
+                            <li>Content creator for medical education</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🤝 Partnerships & Onboarding - 10% ($10K)</h3>
+                        <ul class="feature-list">
+                            <li>Hospital partnership agreements</li>
+                            <li>Doctor onboarding & verification</li>
+                            <li>Pharmacy network establishment</li>
+                            <li>Blood bank integrations</li>
+                            <li>Legal agreements & contracts</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📣 Marketing & User Acquisition - 10% ($10K)</h3>
+                        <ul class="feature-list">
+                            <li>Digital marketing campaigns</li>
+                            <li>Influencer partnerships</li>
+                            <li>Social media advertising</li>
+                            <li>Beta user referral programs</li>
+                            <li>Brand building & PR</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3>⚖️ Legal & Compliance - 5% ($5K)</h3>
+                        <ul class="feature-list">
+                            <li>Healthcare regulations compliance</li>
+                            <li>Data privacy & HIPAA compliance</li>
+                            <li>Medical licenses & certifications</li>
+                            <li>Terms of service & privacy policies</li>
+                            <li>Intellectual property protection</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="problem-box" style="margin-top: 50px;">
+                <h3>What We'll Achieve with This Funding</h3>
+                <ul class="feature-list">
+                    <li><strong>Launch MVP:</strong> Full-featured app with all 7 core features live in 6 months</li>
+                    <li><strong>User Traction:</strong> 10,000+ early adopters and beta testers</li>
+                    <li><strong>Network Effect:</strong> 50+ hospitals, 500+ doctors, 100+ pharmacies onboarded</li>
+                    <li><strong>AI Validation:</strong> Proven accuracy and reliability through real-world testing</li>
+                    <li><strong>Revenue Generation:</strong> First paying customers and subscription revenue</li>
+                    <li><strong>Series A Ready:</strong> Strong metrics and traction for next funding round in 18 months
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 15: Why Invest -->
+        <div class="slide" data-slide="15">
+            <h2>🚀 Why Invest in Healthy Scan</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">💎</div>
+                    <h3>Massive Market Opportunity</h3>
+                    <ul class="feature-list">
+                        <li>$50B+ India healthcare market growing at 22% CAGR</li>
+                        <li>1.4B+ potential users with urgent healthcare needs</li>
+                        <li>Post-pandemic shift to digital health is permanent</li>
+                        <li>Government support through Digital India initiatives</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">🏆</div>
+                    <h3>First-Mover Advantage</h3>
+                    <ul class="feature-list">
+                        <li>No competitor offers complete 7-in-1 ecosystem</li>
+                        <li>AI body scanning + hospital transparency is unique</li>
+                        <li>Early adopters become loyal users in healthcare</li>
+                        <li>Network effects create strong moat over time</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">📈</div>
+                    <h3>Multiple Revenue Streams</h3>
+                    <ul class="feature-list">
+                        <li>7 different monetization channels reduce risk</li>
+                        <li>Recurring revenue from subscriptions</li>
+                        <li>B2B + B2C for diversified income</li>
+                        <li>Commission-based model = low capital requirement</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">🌍</div>
+                    <h3>Global Scalability</h3>
+                    <ul class="feature-list">
+                        <li>Model works in any developing country</li>
+                        <li>Southeast Asia, Africa, Latin America potential</li>
+                        <li>Technology platform can adapt to any market</li>
+                        <li>Export opportunity worth $100B+ globally</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">❤️</div>
+                    <h3>Social Impact + Profitability</h3>
+                    <ul class="feature-list">
+                        <li>Save lives while building a profitable business</li>
+                        <li>Attractive to impact investors and ESG funds</li>
+                        <li>Mission-driven team = strong retention</li>
+                        <li>Government partnerships unlock additional funding</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="icon">🎯</div>
+                    <h3>Clear Exit Opportunities</h3>
+                    <ul class="feature-list">
+                        <li>Acquisition by healthcare giants (Apollo, Fortis)</li>
+                        <li>Tech companies (Google Health, Amazon Care)</li>
+                        <li>Insurance companies for risk assessment data</li>
+                        <li>IPO potential in 7-10 years with strong growth</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta-section" style="margin-top: 50px;">
+                <p style="font-size: 1.5em; font-weight: 600; line-height: 1.7;">This is not just a business
+                    opportunity—it's a chance to transform healthcare for a billion people and build a category-defining
+                    company in the process.</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: Closing -->
+        <div class="slide" data-slide="16">
+            <div class="hero-section">
+                <div class="logo">🏥</div>
+                <h1 style="font-size: 3.5em;">Let's Build the Future of Healthcare</h1>
+                <p class="tagline" style="font-size: 1.6em; margin-top: 40px;">From Crisis Management to Proactive Care
+                </p>
+                <div
+                    style="margin-top: 70px; padding: 60px; background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(0, 153, 204, 0.15) 100%); border-radius: 30px; border: 2px solid rgba(0, 212, 255, 0.4);">
+                    <h3 style="font-size: 2.3em; margin-bottom: 35px; color: white;">Join Us in This Mission</h3>
+                    <p style="font-size: 1.4em; margin-bottom: 40px; line-height: 1.8;">Whether you're an investor,
+                        healthcare partner, potential team member, or someone who believes healthcare should be
+                        accessible to all—let's connect and build something extraordinary together.</p>
+                    <div class="grid-3" style="margin-top: 50px; text-align: center;">
+                        <div>
+                            <div style="font-size: 3em; margin-bottom: 15px;">📧</div>
+                            <p style="font-size: 1.2em; color: #00d4ff; font-weight: 600;">rudrapratap8692149@gmail.com
+                            </p>
+                        </div>
+                        <div>
+                            <div style="font-size: 3em; margin-bottom: 15px;">👨‍💻</div>
+                            <p style="font-size: 1.2em; font-weight: 600;">Rudra Pratap Singh</p>
+                            <p style="font-size: 1em;">Founder & CEO</p>
+                        </div>
+                        <div>
+                            <div style="font-size: 3em; margin-bottom: 15px;">🎓</div>
+                            <p style="font-size: 1.2em; font-weight: 600;">IIT Madras</p>
+                            <p style="font-size: 1em;">BS Data Science</p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    style="margin-top: 60px; padding: 50px; background: rgba(255, 255, 255, 0.05); border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <p style="font-size: 1.7em; font-weight: 700; line-height: 1.7; color: #00d4ff;">"Healthcare is a
+                        human right, not a privilege. We're building the technology to make that a reality for every
+                        Indian."</p>
+                    <p style="font-size: 1.2em; margin-top: 25px; font-style: italic;">— Rudra Pratap Singh</p>
+                </div>
+                <div style="margin-top: 50px;">
+                    <p style="font-size: 1.8em; font-weight: 600;">Thank You 🙏</p>
+                    <p style="font-size: 1.3em; margin-top: 20px; opacity: 0.8;">Let's make healthcare accessible,
+                        affordable, and intelligent.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <div class="slide-indicator" id="indicator"></div>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 16;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            slides[currentSlide - 1].classList.add('active');
+            dots[currentSlide - 1].classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        function goToSlide(n) {
+            currentSlide = n;
+            showSlide(currentSlide);
+        }
+
+        function createIndicators() {
+            const indicator = document.getElementById('indicator');
+            for (let i = 1; i <= totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (i === 1) dot.classList.add('active');
+                dot.onclick = () => goToSlide(i);
+                indicator.appendChild(dot);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        createIndicators();
+        showSlide(currentSlide);
+    </script>
+</body>
+
+</html>
